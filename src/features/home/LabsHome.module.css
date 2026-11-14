@@ -1,0 +1,162 @@
+/* A calm, studio-like dashboard: a clear introduction followed by the next action. */
+.home { display: flex; flex-direction: column; gap: clamp(36px, 5vw, 64px); }
+.top {
+  display: grid;
+  gap: 16px;
+  padding: clamp(20px, 3vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--copper) 9%, var(--surface)), var(--surface) 72%);
+}
+.brand { display: grid; align-content: center; justify-items: start; gap: 12px; padding: 8px 0; }
+.kicker { margin: 0; color: var(--copper); font: 700 12px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+.title { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(46px, 6vw, 76px); line-height: 1.02; letter-spacing: -.045em; }
+.title span { color: var(--copper); margin-inline-start: .1em; }
+.description { max-width: 38ch; margin: 2px 0 0; font-size: 17px; line-height: 1.55; color: var(--muted); }
+.motto { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; color: var(--muted); font: 600 12px var(--font-mono); }
+.motto span { padding: 6px 9px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.hudHead { text-transform: uppercase; letter-spacing: .08em; }
+@media (min-width: 760px) {
+  .top { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: stretch; }
+  .brand { grid-row: span 2; padding-inline-end: 24px; }
+}
+@media (max-width: 759px) { .title { font-size: clamp(44px, 12vw, 64px); } }
+
+/* The progress readout: one tick per lab, grouped by theme. */
+.hud {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface);
+  box-shadow: 0 2px 10px color-mix(in oklab, var(--ink) 4%, transparent);
+}
+.hudHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font: 700 14px var(--font-display);
+}
+.hudHead b {
+  margin-inline-start: auto;
+  font: 800 28px / 1 var(--font-display);
+  font-stretch: 75%;
+  letter-spacing: 0.02em;
+}
+.hudHead small {
+  font-size: 16px;
+  color: var(--muted);
+}
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.strip li {
+  display: flex;
+  gap: 2px;
+}
+.strip i {
+  width: 7px;
+  height: 20px;
+  border-radius: 2px;
+  border: 1.5px solid color-mix(in oklab, var(--track) 55%, var(--line));
+}
+.strip i[data-state="works"],
+.strip i[data-state="done"] {
+  background: var(--track);
+  border-color: var(--track);
+}
+.strip i[data-state="planned"] {
+  border-style: dashed;
+  opacity: 0.6;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+.stats div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.stats dt {
+  font: 11.5px var(--font-mono);
+  color: var(--muted);
+}
+.stats dd {
+  margin: 0;
+  font: 800 24px / 1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+.stats [data-state="works"] dd {
+  color: var(--ok);
+}
+.stats [data-state="done"] dd {
+  color: var(--copper);
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 20px;
+  margin-bottom: 14px;
+}
+.sectionHead h2 {
+  margin: 0;
+  font: 750 26px var(--font-display);
+  letter-spacing: -0.025em;
+}
+.sectionHead p {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* The 3D board sits on a panel of its own, like a part on a cutting mat. */
+.board {
+  position: relative;
+  padding: 18px 16px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 55%, var(--surface), transparent),
+    color-mix(in oklab, var(--bg) 60%, var(--surface));
+}
+@media (min-width: 1000px) {
+  .board {
+    padding: 22px 22px 14px;
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+@media (min-width: 760px) and (max-width: 999px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Keep the primary action ahead of the progress details on a small screen. */
+@media (max-width: 759px) {
+  .top > .brand { order: 0; }
+  .top > article { order: 1; }
+  .top > .hud { order: 2; }
+}
